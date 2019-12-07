@@ -88,8 +88,7 @@ COPY ./config/ports.conf ${APACHE_CONF_DIR}/ports.conf
 
 
 COPY ./.laravel_env /var/www/justgram/.env
-
-# RUN cd /var/www/justgram && php artisan passport:keys && php artisan optimize && composer dump-autoload && php artisan config:clear
+RUN cd /var/www/justgram && php artisan passport:keys
 
 RUN chown -R www-data:www-data /var/www/*
 
