@@ -4,6 +4,8 @@ services:
   api:
     build:
      context: '.'
+    environment:
+        TZ: "Asia/Seoul"
     container_name: api
     hostname: api
     domainname: localdomain

@@ -45,8 +45,9 @@ docker-compose exec api /bin/bash
 docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 docker kill $(docker ps -q)
 docker rm $(docker ps -a -q)
-docker rm $(docker ps -a -q)
 
+
+docker kill $(docker ps -q) && docker rm $(docker ps -a -q) && docker-compose build --force-rm
 ```
 
 ## Contributing

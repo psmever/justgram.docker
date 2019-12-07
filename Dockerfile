@@ -1,11 +1,14 @@
 FROM ubuntu:latest
-
 LABEL maintainer="psmever <psmever@gmail.com>"
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL=C.UTF-8
 
 ARG LARAVEL_ENV_FILE
 ARG OS_LOCALE
 ARG APACHE_CONF_DIR
 
+ENV TZ=Asia/Seoul
 ENV APACHE_CONF_DIR=/etc/apache2
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
@@ -24,10 +27,6 @@ ADD ./config/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:ondrej/php
-RUN apt-get update
-
 # System.. apt install
 RUN apt-get install -y \
     apt-utils \
@@ -38,6 +37,14 @@ RUN apt-get install -y \
     vim \
     iputils-ping \
     unzip
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN locale-gen ko_KR.UTF-8
+RUN localedef -f UTF-8 -i ko_KR ko_KR.UTF-8
+
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:ondrej/php
+RUN apt-get update
 
 # Developer apt install
 RUN apt-get install -y \
@@ -86,7 +93,4 @@ COPY ./.laravel_env /var/www/justgram/.env
 
 RUN chown -R www-data:www-data /var/www/*
 
-RUN ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-RUN locale-gen ko_KR.UTF-8
-RUN localedef -f UTF-8 -i ko_KR ko_KR.utf8
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
