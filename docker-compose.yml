@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  api:
+    build:
+     context: '.'
+    container_name: api
+    hostname: api
+    domainname: localdomain
+    ports:
+      - 43380:43380
+      - 443:443
+      - 25:25
+    tty: true
+    command:
+        - start.sh
+    networks:
+      static-network:
+        ipv4_address: 172.60.128.2
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.60.0.0/16
