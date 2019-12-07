@@ -31,6 +31,24 @@ docker-compose build --force-rm
 docker-compose up -d
 ```
 
+## Docker Command
+```bash
+// 빌드
+docker-compose build --force-rm
+
+// 이미지 초기화
+docker system prune -a
+
+// 컨테이너 접속
+docker-compose exec api /bin/bash
+
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+docker kill $(docker ps -q)
+docker rm $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
