@@ -17,11 +17,8 @@ services:
     command:
         - start.sh
     networks:
-      static-network:
-        ipv4_address: ${local_ip_address}
+        - api-networks
 
 networks:
-  static-network:
-    ipam:
-      config:
-        - subnet: 172.60.0.0/16
+    api-networks:
+        driver: bridge
