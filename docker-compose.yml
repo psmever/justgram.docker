@@ -18,7 +18,7 @@ services:
         - start.sh
     networks:
       static-network:
-        ipv4_address: 172.60.128.2
+        ipv4_address: ${local_ip_address}
 
 networks:
   static-network:
